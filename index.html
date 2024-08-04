@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asclepio - BioAtlas</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            color: #f5f5dc;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h1 {
+            font-size: 3em;
+            letter-spacing: 0.2em;
+            margin: 0;
+            padding: 0.5em 0;
+            animation: textShadow 3s ease-in-out infinite;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 30px;
+            font-size: 1.2em;
+            color: #f5f5dc;
+            background-color: #000;
+            border: 2px solid #f5f5dc;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background-color: #f5f5dc;
+            color: #000;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes textShadow {
+            0%, 100% { text-shadow: 0 0 10px #f5f5dc, 0 0 20px #f5f5dc, 0 0 30px #f5f5dc; }
+            50% { text-shadow: 0 0 20px #f5f5dc, 0 0 30px #f5f5dc, 0 0 40px #f5f5dc; }
+        }
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .dark-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A S C L E P I O - BioAtlas</h1>
+        <p>Por el momento, solo podrás acceder si cuentas con un usuario proporcionado por la Universidad Santiago de Cali.</p>
+        <div class="button-container">
+            <button class="button" id="continueButton">Continuar</button>
+        </div>
+    </div>
+    <div class="dark-overlay" id="overlay"></div>
+    <script>
+        document.getElementById('continueButton').addEventListener('click', function() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('show');
+            setTimeout(() => {
+                window.location.href = 'https://proxyusc.elogim.com/auth-meta/login.php?url=https';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
