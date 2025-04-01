@@ -3,94 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asclepio - BioAtlas</title>
+    <title>AI IMAGINE O.O B</title>
     <style>
-        body, html {
-            height: 100%;
+        :root {
+            --primary-color: #2A2F4F;
+            --secondary-color: #4B527E;
+            --accent-color: #7C81AD;
+            --text-color: #E5E5E5;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        #prompt {
+            width: 80%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        #prompt:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        #resultado {
+            margin: 2rem 0;
+            min-height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000;
-            color: #f5f5dc;
-            overflow: hidden;
+            flex-direction: column;
         }
-        .container {
+
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success {
+            color: #00ff00;
+            font-weight: bold;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
         }
-        h1 {
-            font-size: 3em;
-            letter-spacing: 0.2em;
-            margin: 0;
-            padding: 0.5em 0;
-            animation: textShadow 3s ease-in-out infinite;
+
+        .error {
+            color: #ff4444;
+            font-weight: bold;
         }
-        p {
-            font-size: 1.2em;
-            margin: 20px 0;
-        }
-        .button-container {
-            margin-top: 20px;
-        }
-        .button {
-            padding: 10px 30px;
-            font-size: 1.2em;
-            color: #f5f5dc;
-            background-color: #000;
-            border: 2px solid #f5f5dc;
-            border-radius: 25px;
-            cursor: pointer;
+
+        .direct-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-top: 1rem;
             transition: all 0.3s ease;
         }
-        .button:hover {
-            background-color: #f5f5dc;
-            color: #000;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes textShadow {
-            0%, 100% { text-shadow: 0 0 10px #f5f5dc, 0 0 20px #f5f5dc, 0 0 30px #f5f5dc; }
-            50% { text-shadow: 0 0 20px #f5f5dc, 0 0 30px #f5f5dc, 0 0 40px #f5f5dc; }
-        }
-        .dark-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            opacity: 0;
-            transition: opacity 1s ease;
-            z-index: 10;
-            pointer-events: none;
-        }
-        .dark-overlay.show {
-            opacity: 1;
-            pointer-events: auto;
+
+        .direct-link:hover {
+            text-shadow: 0 0 10px var(--accent-color);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>A S C L E P I O - BioAtlas</h1>
-        <p>Por el momento, solo podrás acceder si cuentas con un usuario proporcionado por la Universidad Santiago de Cali.</p>
-        <div class="button-container">
-            <button class="button" id="continueButton">Continuar</button>
-        </div>
+        <h1>AI 0.0</h1>
+        <div class="subtitle">MUY PRONTO AI IMAGINE SERENITY</div>
+        
+        <input type="text" id="prompt" placeholder="No dispobible aún...">
+        <button onclick="generarImagen()">NO PRESIONAR</button>
+        
+        <div id="resultado"></div>
     </div>
-    <div class="dark-overlay" id="overlay"></div>
+
     <script>
-        document.getElementById('continueButton').addEventListener('click', function() {
-            const overlay = document.getElementById('overlay');
-            overlay.classList.add('show');
-            setTimeout(() => {
-                window.location.href = 'https://bioatlas.proxyusc.elogim.com/Home';
-            }, 1000);
-        });
+        async function generarImagen() {
+            const prompt = document.getElementById("prompt").value;
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const response = await fetch("https://magicloops.dev/api/loop/1672deeb-46fb-4017-a9ce-2251502f19b2/run", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                
+                const data = await response.json();
+                const imageUrl = data.image_url || data.link;
+
+                if (imageUrl) {
+                    // Abrir en nueva pestaña
+                    const newWindow = window.open(imageUrl, '_blank');
+                    
+                    // Mostrar mensaje de éxito
+                    resultadoDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Imagen generada con éxito
+                        </div>
+                        <a href="${imageUrl}" class="direct-link" target="_blank">
+                            Abrir imagen en nueva pestaña
+                        </a>
+                    `;
+                    
+                    // Enfocar la nueva pestaña si está permitido
+                    if (newWindow) {
+                        newWindow.focus();
+                    }
+                } else {
+                    throw new Error('No se encontró URL de imagen en la respuesta');
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                resultadoDiv.innerHTML = `
+                    <div class="error">
+                        ❌ Error al generar la imagen: ${error.message}<br>
+                        Por favor intente nuevamente.
+                    </div>
+                `;
+            }
+        }
     </script>
 </body>
 </html>
