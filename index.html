@@ -1,151 +1,307 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ASCLEPIO VISION</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #ffffff;
-      color: #000000;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #121212;
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light-mode {
+      background-color: #f5f5f5;
+      color: #000;
+    }
+
+    .sidebar {
+      width: 300px;
+      background: #1e1e1e;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 1px solid #333;
+      transition: background 0.3s, transform 0.3s ease;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    body.light-mode .sidebar {
+      background: #ffffff;
+      border-color: #ddd;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .history-img {
+      width: 100%;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .history-img:hover {
+      transform: scale(1.05);
+    }
+
+    .main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: #000;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .main h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
-    .logo {
-      position: absolute;
-      top: 1rem;
-      right: 2rem;
-      font-weight: bold;
-      letter-spacing: 5px;
-      font-size: 1.2rem;
+    .main p {
+      font-size: 18px;
+      margin-bottom: 30px;
     }
 
-    .container {
-      background: #f5f5f5;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    .input-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
       width: 100%;
       max-width: 600px;
     }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #000;
+    .input-area input {
+      flex: 1;
+      padding: 14px;
       border-radius: 10px;
-      font-size: 1rem;
-      margin-bottom: 1rem;
+      border: none;
+      font-size: 16px;
     }
 
-    button {
-      padding: 0.8rem 2rem;
+    .input-area button {
+      padding: 14px 24px;
+      background: #333;
+      color: #fff;
       border: none;
       border-radius: 10px;
-      background: #000;
-      color: #fff;
-      font-size: 1rem;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: background 0.3s;
     }
 
-    button:hover {
-      background: #333;
+    .input-area button:hover {
+      background: #555;
     }
 
-    .result {
-      margin-top: 2rem;
+    .image-display {
+      margin-top: 20px;
       text-align: center;
-      white-space: pre-wrap;
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      color: #000;
+      position: relative;
     }
 
-    .result img {
-      margin-top: 1rem;
+    .image-display img {
       max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .download-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
     .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #000;
+      border: 6px solid #ccc;
+      border-top: 6px solid #09f;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       animation: spin 1s linear infinite;
-      margin: 1rem auto;
+      margin: 20px auto;
     }
 
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    .toggle-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .loading-text {
+      color: #999;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .toggle-sidebar-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <div class="logo">V I S I O N</div>
-  <h1>ASCLEPIO VISION</h1>
-  <div class="container">
-    <input type="text" id="prompt" placeholder="Describe tu imagen...">
-    <button onclick="generarRespuesta()">Enviar Prompt</button>
+  <div class="sidebar" id="sidebar">
+    <h2>Imágenes creadas</h2>
+    <div id="history"></div>
+  </div>
 
-    <div class="result" id="resultado">
-      <!-- Aquí aparecerá la respuesta de la API -->
+  <div class="main">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()">☰</button>
+    <div class="toggle-switch">
+      <label>
+        <input type="checkbox" id="modeToggle" /> Modo claro
+      </label>
+    </div>
+    <h1>V I S I O N</h1>
+    <p>Convierte tus ideas en imágenes con Asclepio vision</p>
+    <div class="input-area">
+      <input type="text" id="prompt" placeholder="Un gato bebiendo vino en marte" />
+      <button id="generateBtn">Generate</button>
+    </div>
+    <div class="image-display" id="display">
+      <div id="loader" class="loader" style="display: none;"></div>
+      <div id="loadingText" class="loading-text"></div>
     </div>
   </div>
 
   <script>
-    async function generarRespuesta() {
-      const prompt = document.getElementById("prompt").value;
-      const resultadoDiv = document.getElementById("resultado");
-      resultadoDiv.innerHTML = '<div class="loader"></div><p>Creando imagen... 🧠💭</p>';
+    const historyDiv = document.getElementById('history');
+    const display = document.getElementById('display');
+    const loader = document.getElementById('loader');
+    const modeToggle = document.getElementById('modeToggle');
+    const generateBtn = document.getElementById('generateBtn');
+    const loadingText = document.getElementById('loadingText');
+    const sidebar = document.getElementById('sidebar');
+
+    modeToggle.addEventListener('change', () => {
+      document.body.classList.toggle('light-mode');
+    });
+
+    generateBtn.addEventListener('click', generateImage);
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('hidden');
+    }
+
+    function saveImagesToLocalStorage(images) {
+      localStorage.setItem('asclepioImages', JSON.stringify(images));
+    }
+
+    function loadImagesFromLocalStorage() {
+      const saved = localStorage.getItem('asclepioImages');
+      if (saved) {
+        const urls = JSON.parse(saved);
+        urls.forEach(url => saveToHistory(url));
+      }
+    }
+
+    async function generateImage() {
+      const prompt = document.getElementById('prompt').value;
+      if (!prompt.trim()) return;
+
+      loader.style.display = 'block';
+      loadingText.textContent = 'Generating image...';
+      display.innerHTML = '';
+      display.appendChild(loader);
+      display.appendChild(loadingText);
 
       try {
         const response = await fetch('https://magicloops.dev/api/loop/1672deeb-46fb-4017-a9ce-2251502f19b2/run', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ prompt: prompt })
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt })
         });
 
-        const data = await response.json();
-        const respuestaTexto = JSON.stringify(data, null, 2);
-        const urlRegex = /(https?:\/\/.+?\.(?:png|jpg|jpeg|gif|webp))(\?[^\s"']*)?/gi;
-        const match = urlRegex.exec(respuestaTexto);
-        const imageUrl = match ? match[0] : null;
-
-        if (imageUrl) {
-          resultadoDiv.innerHTML = `<p><strong>Prompt:</strong> ${prompt}</p>` +
-                                   `<p><strong>Respuesta:</strong></p><pre>${respuestaTexto}</pre>` +
-                                   `<img src="${imageUrl}" alt="Imagen generada">`;
+        const result = await response.json();
+        const match = JSON.stringify(result).match(/https?:\/\/[^"']+/);
+        if (match) {
+          const imageUrl = match[0].replace(/\\/g, '');
+          showImage(imageUrl);
+          saveToHistory(imageUrl);
+          updateLocalStorage(imageUrl);
+          alert("¡Imagen generada exitosamente!");
         } else {
-          resultadoDiv.innerHTML = `<p><strong>Prompt:</strong> ${prompt}</p><pre>${respuestaTexto}</pre>`;
+          throw new Error("Image URL not found in API response");
         }
-
       } catch (error) {
-        resultadoDiv.innerHTML = "Hubo un error al conectar con la API. 🚨\n" + error.message;
-        console.error(error);
+        display.innerHTML = `<p>Error generating image: ${error.message}</p>`;
+      } finally {
+        loader.style.display = 'none';
+        loadingText.textContent = '';
       }
     }
+
+    function showImage(url) {
+      const img = document.createElement('img');
+      img.src = url;
+
+      const downloadBtn = document.createElement('button');
+      downloadBtn.textContent = 'Download';
+      downloadBtn.className = 'download-btn';
+      downloadBtn.onclick = () => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'asclepio_image.jpg';
+        a.click();
+      };
+
+      display.innerHTML = '';
+      display.appendChild(img);
+      display.appendChild(downloadBtn);
+    }
+
+    function saveToHistory(url) {
+      const img = document.createElement('img');
+      img.src = url;
+      img.className = 'history-img';
+      img.onclick = () => showImage(url);
+      historyDiv.prepend(img);
+    }
+
+    function updateLocalStorage(newUrl) {
+      const current = JSON.parse(localStorage.getItem('asclepioImages')) || [];
+      if (!current.includes(newUrl)) {
+        current.unshift(newUrl);
+        saveImagesToLocalStorage(current);
+      }
+    }
+
+    loadImagesFromLocalStorage();
   </script>
 </body>
 </html>
